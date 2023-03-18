@@ -1,0 +1,31 @@
+{
+  "name": "azlyrics-lyric-scraper",
+  "version": "1.0.0-official",
+  "description": "AzLyrics webscraper that returns a promise in JSON format. Another feature of this scraper is that it prevents the anti-bot detection so we can avoid human verifications such as captchas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "azlyrics-scraper",
+    "azlyrics-lyric-scraper",
+    "lyrics-scraper",
+    "azlyrics-api"
+  ],
+  "dependencies": {
+   "axios": "^1.3.4",
+   "cheerio": "^1.0.0-rc.12",
+   "request-promise": "^4.2.6"
+   "scrapingbee": "^1.6.1",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lester51/AzLyrics-Lyric-Scraper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lester51/AzLyrics-Lyric-Scraper/issues"
+  },
+  "homepage": "https://github.com/lester51/AzLyrics-Lyric-Scraper",
+  "author": "HackMeSenpai",
+  "license": "MIT"
+}
