@@ -61,5 +61,5 @@ module.exports = class client {
 	        })
             return lyricScraper(result)
        }
-	)
+	}
 }
