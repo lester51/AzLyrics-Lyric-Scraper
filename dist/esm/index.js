@@ -96,62 +96,62 @@ var getConfig = function () {
 var getObjectByLocation = function (el, array) {
     return array.find(function (obj) { return obj.location.toLowerCase().includes(el.toLowerCase()); });
 };
-module.exports = function searchSong(q) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a, proxy_list, cookie, formData, data;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4, getConfig()];
-                case 1:
-                    _a = _b.sent(), proxy_list = _a.proxy_list, cookie = _a.cookie;
-                    formData = {
-                        u: "https://search.azlyrics.com/suggest.php?q=".concat(q),
-                        u_default: 'https:/\/www.google.com/',
-                        customip: '',
-                        server_name: getObjectByLocation('newyork', proxy_list.servers).server_name,
-                        selip: getObjectByLocation('newyork', proxy_list.ips).ip,
-                        allowCookies: 'on'
-                    };
-                    return [4, proxify(formData, cookie)];
-                case 2:
-                    data = _b.sent();
-                    return [2, JSON.parse(data)];
-            }
-        });
+var searchSong = function (q) { return __awaiter(_this, void 0, void 0, function () {
+    var _a, proxy_list, cookie, formData, data;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4, getConfig()];
+            case 1:
+                _a = _b.sent(), proxy_list = _a.proxy_list, cookie = _a.cookie;
+                formData = {
+                    u: "https://search.azlyrics.com/suggest.php?q=".concat(q),
+                    u_default: 'https:/\/www.google.com/',
+                    customip: '',
+                    server_name: getObjectByLocation('newyork', proxy_list.servers).server_name,
+                    selip: getObjectByLocation('newyork', proxy_list.ips).ip,
+                    allowCookies: 'on'
+                };
+                return [4, proxify(formData, cookie)];
+            case 2:
+                data = _b.sent();
+                return [2, JSON.parse(data)];
+        }
     });
-};
-module.exports = function getLyrics(url) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a, proxy_list, cookie, formData, html, $, title, lyrics, types, translation;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4, getConfig()];
-                case 1:
-                    _a = _b.sent(), proxy_list = _a.proxy_list, cookie = _a.cookie;
-                    formData = {
-                        u: url,
-                        u_default: 'https:/\/www.google.com/',
-                        customip: '',
-                        server_name: getObjectByLocation('newyork', proxy_list.servers).server_name,
-                        selip: getObjectByLocation('newyork', proxy_list.ips).ip,
-                        allowCookies: 'on'
-                    };
-                    return [4, proxify(formData, cookie)];
-                case 2:
-                    html = _b.sent();
-                    $ = cheerio.load(html);
-                    title = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().text();
-                    lyrics = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().next().next().next().text() + '}';
-                    types = lyrics.match(/\[(.*?):\]/g);
-                    translation = types.join().replace(/[\[\]:]/g, '').split(',');
-                    lyrics = lyrics.trimStart().trim().replace(/\[(.*?):\]/g, "}{").substr(1).match(/{(.*?)}/g).map(function (e) { return e.replace(/[{}]/g, '').trim().trimStart().replace(/  /g, '\n\n'); });
-                    lyrics = types.map(function (e, i) {
-                        var _a;
-                        return _a = {}, _a["".concat(translation[i])] = "".concat(e, "\n\n").concat(lyrics[i]), _a;
-                    });
-                    return [2, { title: title, lyricsList: lyrics }];
-            }
-        });
+}); };
+var getLyrics = function (url) { return __awaiter(_this, void 0, void 0, function () {
+    var _a, proxy_list, cookie, formData, html, $, title, lyrics, types, translation;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4, getConfig()];
+            case 1:
+                _a = _b.sent(), proxy_list = _a.proxy_list, cookie = _a.cookie;
+                formData = {
+                    u: url,
+                    u_default: 'https:/\/www.google.com/',
+                    customip: '',
+                    server_name: getObjectByLocation('newyork', proxy_list.servers).server_name,
+                    selip: getObjectByLocation('newyork', proxy_list.ips).ip,
+                    allowCookies: 'on'
+                };
+                return [4, proxify(formData, cookie)];
+            case 2:
+                html = _b.sent();
+                $ = cheerio.load(html);
+                title = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().text();
+                lyrics = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().next().next().next().text() + '}';
+                types = lyrics.match(/\[(.*?):\]/g);
+                translation = types.join().replace(/[\[\]:]/g, '').split(',');
+                lyrics = lyrics.trimStart().trim().replace(/\[(.*?):\]/g, "}{").substr(1).match(/{(.*?)}/g).map(function (e) { return e.replace(/[{}]/g, '').trim().trimStart().replace(/  /g, '\n\n'); });
+                lyrics = types.map(function (e, i) {
+                    var _a;
+                    return _a = {}, _a["".concat(translation[i])] = "".concat(e, "\n\n").concat(lyrics[i]), _a;
+                });
+                return [2, { title: title, lyricsList: lyrics }];
+        }
     });
+}); };
+module.exports = {
+    getLyrics: getLyrics,
+    searchSong: searchSong
 };
 //# sourceMappingURL=index.js.map
