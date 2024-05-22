@@ -6,20 +6,22 @@ AzLyrics webscraper that returns a promise in JSON format. Another feature of th
 
 # HOW TO INSTALL?
 ```
-npm i azlyrics-lyric-scraper
+npm i azlyrics-scrape-api
 ```
 
 # Require to export function
 ```js
 //CommonJS
-const client = require("azlyrics-lyric-scraper");
+const azlyrics = require("azlyrics-scrape-api");
+//ES Module
+import azlyrics from 'azlyrics-scrape-api';
 ```
 
 ## SIMPLE USAGE
 ### usage of `searchSong()` and `getLyrics()`
 ```js
 (async()=>
-const azlyrics = require("azlyrics-lyric-scraper");
+const azlyrics = require("azlyrics-scrape-api");
 
 let res1 = await azlyrics.searchSong('Mou Sukoshi Dake Yoasobi')
 console.log(res1)
