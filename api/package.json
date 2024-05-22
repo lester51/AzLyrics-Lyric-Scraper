@@ -1,0 +1,26 @@
+{
+  "name": "azlyrics-api",
+  "version": "1.0.0",
+  "description": "azlyrics api by hackmesenpai",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "azlyrics-scrape-api": "1.1.7-beta"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lester51/AzLyrics-Lyric-Scraper.git"
+  },
+  "keywords": [
+    "azlyrics"
+  ],
+  "author": "HackMeSenpai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lester51/AzLyrics-Lyric-Scraper/issues"
+  },
+  "homepage": "https://github.com/lester51/AzLyrics-Lyric-Scraper#readme"
+}
