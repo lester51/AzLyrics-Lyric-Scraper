@@ -56,7 +56,7 @@ let getObjectByLocation = (el,array) => {
 }
 
 
-module.exports = async function searchSong(q) {
+let searchSong = async(q) => {
 //THIS FUNC. IS FOR GETTING THE COOKIES AND AVAILABLE SERVERS & IP'S TO BE USED ON REQ.
 let {proxy_list,cookie} = await getConfig()
 //THIS IS THE DATA THAT WE'RE GOING TO POST
@@ -74,7 +74,7 @@ let data = await proxify(formData,cookie)
 return JSON.parse(data)
 }
 
-module.exports = async function getLyrics(url) {
+let getLyrics = async(url) => {
 let {proxy_list,cookie} = await getConfig()
 let formData = {
     u: url, //YOUR URL YOU WANT TO PROXIFIED
@@ -95,4 +95,9 @@ lyrics = types.map((e,i)=>{
     return {[`${translation[i]}`]: `${e}\n\n${lyrics[i]}`}
 })
 return { title: title, lyricsList: lyrics }
+}
+
+module.exports = {
+    getLyrics,
+    searchSong
 }
