@@ -138,11 +138,12 @@ var getLyrics = function (url) { return __awaiter(_this, void 0, void 0, functio
                 html = _b.sent();
                 $ = cheerio.load(html);
                 title = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().text();
-                lyrics = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().next().next().next().text() + '}';
+                lyrics = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().next().next().next().text();
                 types = lyrics.match(/\[(.*?):\]/g);
                 if (types == null)
-                    return [2, { title: title, lyricsList: lyrics.trim() }];
+                    return [2, { title: title, lyrics: lyrics.trim() }];
                 translation = types.join().replace(/[\[\]:]/g, '').split(',');
+                lyrics = lyrics + '}';
                 lyrics = lyrics.trimStart().trim().replace(/\[(.*?):\]/g, "}{").substr(1).match(/{(.*?)}/g).map(function (e) { return e.replace(/[{}]/g, '').trim().trimStart().replace(/  /g, '\n\n'); });
                 lyrics = types.map(function (e, i) {
                     var _a;
