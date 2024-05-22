@@ -89,7 +89,7 @@ let $ = cheerio.load(html)
 let title = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().text()
 let lyrics = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().next().next().next().text()+'}'
 let types = lyrics.match(/\[(.*?):\]/g)
-if (types == null) return {title: title, lyricsList: lyrics.trim()};
+if (types == null) return {title: title, lyricsList: lyrics.slice(0,-1).trim()};
 let translation = types.join().replace(/[\[\]:]/g,'').split(',')
 lyrics = lyrics.trimStart().trim().replace(/\[(.*?):\]/g,`}{`).substr(1).match(/{(.*?)}/g).map(e=>e.replace(/[{}]/g,'').trim().trimStart().replace(/  /g,'\n\n'))
 lyrics = types.map((e,i)=>{
