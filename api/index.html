@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AZLyrics Unofficial Documentation</title>
+        <meta name="og:description" content="Developed by Lester Navarra">
+        <meta name="description" content="Developed by Lester Navarra">
+        <style type="text/css">
+            *{
+                margin: 0;
+                padding: 0;
+                user-select: none;
+                box-sizing: border-box;
+                border: 0;
+                outline: none;
+            }
+            body{
+                background-color: #eaeaea;
+                width: 100%;
+                height: 100vh;
+            }
+            .box{
+                margin: .75em;
+                background-image: linear-gradient(to top left, #ffffff, 75% #dedede);
+                border-radius: 1em;
+                padding: .5em;
+                box-shadow: 3px 3px 10px #aaaaaa, -10px -10px 10px #ffffff;
+            }
+            .box:nth-child(even){
+                margin: 2em .75em;
+            }
+            .header{
+                display: flex;
+                flex-direction: row;
+                align-content: center;
+                align-items: center;
+            }
+            .header > .title{
+                display: flex;
+                flex-direction: column;
+                margin: 0 1em;
+            }
+            .header > img{
+                width: 5%;
+                margin: 0 1em;
+            }
+            fieldset > legend {
+                margin-left: 2em;
+                font-weight: bolder;
+                font-variant: small-caps;
+            }
+            fieldset > blockquote{
+                padding-left: 1em;
+                margin: 0 1em;
+                border-left: 5px #aaaaaa solid;
+            }
+            fieldset > ul, fieldset > ul > li{
+                margin-left: 30px;
+                list-style: decimal;
+                color: #000000;
+                font-weight: bold;
+            }
+            fieldset > ul > a{
+                color: #000000;
+                text-decoration: none;
+            }
+            fieldset > blockquote > span{
+                font-weight: bold;
+                cursor: pointer;
+            }
+            fieldset > blockquote > .span{
+                display: block;
+                padding: .25em .5em;
+                width: 100%;
+                box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                background-color: transparent;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="header box">
+        <img src="https://www.azlyrics.com/az_logo_tr.png" alt="AzLyrics">
+        <div class="title">
+            <h1 id="azlyrics-lyric-scraper">API DOCUMENTATION</h1>
+            <h3>Developed by Lester Navarra</h3>
+        </div>
+    </div>
+    <fieldset class="box">
+        <legend id="what"><h3>What is AzLyrics API?</h3></legend>
+        <blockquote>AzLyrics API that returns a promise in JSON format. Another feature of this API is that it prevents the anti-bot detection so we can avoid human verifications such as captchas.</blockquote>
+    </fieldset>
+    <fieldset class="box">
+        <legend id="based"><h3>API Base URL?</h3></legend>
+        <blockquote>Here's the base url of the api <span id="url-click" title="Click to copy">https://azlyrics-lyric-scraper.onrender.com/</span></blockquote>
+    </fieldset>
+    <fieldset class="box">
+        <legend id="routes"><h3>API Routes? [GET]</h3></legend>
+        <blockquote>The default or "<mark>/</mark>" will return automatically to this documentation. The table below is the list of the parameters<br><br>The "<mark>/lyrics</mark>" route will fetch the lyrics of the song/music title you provided.</blockquote>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>Song title or music title where can be found in <a href="https://azlyrics.com/">AzLyrics</a></td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset class="box">
+        <legend id="sample"><h3>Example</h3></legend>
+        <blockquote>
+            <span class="span" id="getLyrics" title="Click to copy">https://azlyrics-lyric-scraper.onrender.com/lyrics?title=Haarper Cinnamon</span>
+        </blockquote>
+    </fieldset>
+    </body>
+    <script type="text/javascript">
+        document.getElementById("getLyrics").onclick = () => {
+            navigator.clipboard.writeText(document.getElementById("getSong").textContent)
+        }
+    </script>
+</html>

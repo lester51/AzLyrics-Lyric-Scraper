@@ -4,7 +4,7 @@ const port = 3000;
 const app = express();
 
 app.get('/', (req, res) => {
-    res.send("This API was made by HackMeSenpai.")
+    res.sendFile('/index.html',{root: __dirname})
 })
 
 app.get('/lyrics', async function(req, res) {
