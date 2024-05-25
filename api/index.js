@@ -48,11 +48,11 @@ app.get('/lyrics', async function(req, res) {
 	}
 	catch (e) {
 		if (!e.response) {
-                        let E = JSON.stringify({error: e.message})
-			res.send(`<html><body>${E}</body>${script}</html>`)
+                        let E1 = JSON.stringify({error: e.message})
+			res.send(`<html><body>${E1}</body>${script}</html>`)
 		} else {
-                        let E = JSON.stringify({error: e.response.status e.response.statusText,data: e.response.data.message})
-			res.send(`<html><body>${E}</body>${script}</html>`)
+                        let E2 = JSON.stringify({error: e.response.status+' '+ e.response.statusText,data: e.response.data.message})
+			res.send(`<html><body>${E2}</body>${script}</html>`)
 		}
 	}
 });
