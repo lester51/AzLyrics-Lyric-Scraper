@@ -43,13 +43,16 @@ app.get('/lyrics', async function(req, res) {
 	    if (!title) throw new Error('title parameter is empty!');
 	    let res1 = await az.searchSong(title)
 	    let res2 = await az.getLyrics(res1.songs[0].url)
-	    res.send(`<body>JSON.stringify(${res2})</body>${script}`)
+            let json = JSON.stringify(res2)
+	    res.send(`<html><body>${json}</body>${script}</html>`)
 	}
 	catch (e) {
 		if (!e.response) {
-			res.send(`<body>JSON.stringify({error: ${e.message}})</body>${script}`)
+                        let E = JSON.stringify({error: e.message})
+			res.send(`<html><body>${E}</body>${script}</html>`)
 		} else {
-			res.send(`<body>JSON.stringify({error: ${e.response.status} ${e.response.statusText},data: e.response.data.message})</body>${script}`)
+                        let E = JSON.stringify({error: e.response.status e.response.statusText,data: e.response.data.message})
+			res.send(`<html><body>${E}</body>${script}</html>`)
 		}
 	}
 });
