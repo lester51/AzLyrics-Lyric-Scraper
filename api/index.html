@@ -134,7 +134,7 @@
             }
             if(window.attachEvent) {
                 if (document.readyState === "complete" || document.readyState === "interactive") {
-                    detectDevTool();
+                    detect();
                     window.attachEvent('onresize', detect);
                     window.attachEvent('onmousemove', detect);
                     window.attachEvent('onfocus', detect);

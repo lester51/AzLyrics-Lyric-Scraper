@@ -2,18 +2,7 @@ const express = require('express');
 const az = require('azlyrics-scrape-api');
 const port = 3000;
 const app = express();
-
-app.get('/', (req, res) => {
-    res.sendFile('/index.html',{root: __dirname})
-})
-
-app.get('/lyrics', async function(req, res) {
-    let title = req.query.title;
-	try {
-	    if (!title) throw new Error('title parameter is empty!');
-	    let res1 = await az.searchSong(title)
-	    let res2 = await az.getLyrics(res1.songs[0].url)
-	    res.send(`<body>${res2}</body><script>
+const script = `<script>
         !function() {
             function detect(allow) {
                 if(isNaN(+allow)) allow = 100;
@@ -26,7 +15,7 @@ app.get('/lyrics', async function(req, res) {
             }
             if(window.attachEvent) {
                 if (document.readyState === "complete" || document.readyState === "inte>
-                    detectDevTool();
+                    detect();
                     window.attachEvent('onresize', detect);
                     window.attachEvent('onmousemove', detect);
                     window.attachEvent('onfocus', detect);
@@ -42,18 +31,25 @@ app.get('/lyrics', async function(req, res) {
                 window.addEventListener('blur', detect);
             }
         }();
-    </script>`)
+    </script>`
+
+app.get('/', (req, res) => {
+    res.sendFile('/index.html',{root: __dirname})
+})
+
+app.get('/lyrics', async function(req, res) {
+    let title = req.query.title;
+	try {
+	    if (!title) throw new Error('title parameter is empty!');
+	    let res1 = await az.searchSong(title)
+	    let res2 = await az.getLyrics(res1.songs[0].url)
+	    res.send(`<body>JSON.stringify(${res2})</body>${script}`)
 	}
 	catch (e) {
 		if (!e.response) {
-			res.json({
-				error: e.message
-			});
+			res.send(`<body>JSON.stringify({error: ${e.message}})</body>${script}`)
 		} else {
-			res.json({
-				error: `${e.response.status} ${e.response.statusText}`,
-				data: e.response.data.message
-			});
+			res.send(`<body>JSON.stringify({error: ${e.response.status} ${e.response.statusText},data: e.response.data.message})</body>${script}`)
 		}
 	}
 });
