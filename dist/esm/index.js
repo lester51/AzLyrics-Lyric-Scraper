@@ -97,7 +97,7 @@ var getObjectByLocation = function (el, array) {
     return array.find(function (obj) { return obj.location.toLowerCase().includes(el.toLowerCase()); });
 };
 var searchSong = function (q) { return __awaiter(_this, void 0, void 0, function () {
-    var _a, proxy_list, cookie, formData, data;
+    var _a, proxy_list, cookie, formData, data, e_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0: return [4, getConfig()];
@@ -111,10 +111,21 @@ var searchSong = function (q) { return __awaiter(_this, void 0, void 0, function
                     selip: getObjectByLocation('newyork', proxy_list.ips).ip,
                     allowCookies: 'on'
                 };
-                return [4, proxify(formData, cookie)];
+                _b.label = 2;
             case 2:
+                _b.trys.push([2, 4, , 5]);
+                return [4, proxify(formData, cookie)];
+            case 3:
                 data = _b.sent();
-                return [2, JSON.parse(data)];
+                if (data.song.length === 0)
+                    throw new Error({ error: "There is currently no available lyrics on our database for that song!" });
+                else
+                    return [2, JSON.parse(data)];
+                return [3, 5];
+            case 4:
+                e_1 = _b.sent();
+                return [2, e_1];
+            case 5: return [2];
         }
     });
 }); };

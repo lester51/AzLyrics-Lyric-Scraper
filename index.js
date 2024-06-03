@@ -58,20 +58,25 @@ let getObjectByLocation = (el,array) => {
 
 let searchSong = async(q) => {
 //THIS FUNC. IS FOR GETTING THE COOKIES AND AVAILABLE SERVERS & IP'S TO BE USED ON REQ.
-let {proxy_list,cookie} = await getConfig()
+    let {proxy_list,cookie} = await getConfig()
 //THIS IS THE DATA THAT WE'RE GOING TO POST
-let formData = {
-    u: `https:/\/search.azlyrics.com/suggest.php?q=${q}`, //YOUR URL YOU WANT TO PROXIFIED
-    u_default: 'https:/\/www.google.com/', //IF "u" params. IS NOT FILLED IT WILL USE THIS AS YOUR URL (NOT REALLY IMPORTANT)
-    customip: '', //IF YOU HAVE OWN IP
-    server_name: getObjectByLocation('newyork',proxy_list.servers).server_name, //GET THIS VALUE ON "getConfig()" servers[. . .array]
-    selip: getObjectByLocation('newyork',proxy_list.ips).ip, //GET THIS VALUE ON "getConfig()" ips[. . .array]
-    allowCookies: 'on' //THERE ARE MORE OTHER OPTIONAL OPTIONS BUT I CHOOSE TO EXCLUDE THEM ON REQ.
-}
-
+    let formData = {
+        u: `https:/\/search.azlyrics.com/suggest.php?q=${q}`, //YOUR URL YOU WANT TO PROXIFIED
+        u_default: 'https:/\/www.google.com/', //IF "u" params. IS NOT FILLED IT WILL USE THIS AS YOUR URL (NOT REALLY IMPORTANT)
+        customip: '', //IF YOU HAVE OWN IP
+        server_name: getObjectByLocation('newyork',proxy_list.servers).server_name, //GET THIS VALUE ON "getConfig()" servers[. . .array]
+        selip: getObjectByLocation('newyork',proxy_list.ips).ip, //GET THIS VALUE ON "getConfig()" ips[. . .array]
+        allowCookies: 'on' //THERE ARE MORE OTHER OPTIONAL OPTIONS BUT I CHOOSE TO EXCLUDE THEM ON REQ.
+    }
+    try {
 //THE RESULT OF THIS FUNC. IS THE UNBLOCKED CONTENT
-let data = await proxify(formData,cookie)
-return JSON.parse(data)
+        let data = await proxify(formData,cookie)
+        if (data.song.length === 0) throw new Error({error: "There is currently no available lyrics on our database for that song!"});
+        else return JSON.parse(data);
+    }
+    catch (e) {
+        return e;
+    }
 }
 
 let getLyrics = async(url) => {
