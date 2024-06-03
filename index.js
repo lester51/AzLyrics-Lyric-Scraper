@@ -68,15 +68,9 @@ let searchSong = async(q) => {
         selip: getObjectByLocation('newyork',proxy_list.ips).ip, //GET THIS VALUE ON "getConfig()" ips[. . .array]
         allowCookies: 'on' //THERE ARE MORE OTHER OPTIONAL OPTIONS BUT I CHOOSE TO EXCLUDE THEM ON REQ.
     }
-    try {
 //THE RESULT OF THIS FUNC. IS THE UNBLOCKED CONTENT
-        let data = await proxify(formData,cookie)
-        if (data.song.length === 0) throw new Error({error: "There is currently no available lyrics on our database for that song!"});
-        else return JSON.parse(data);
-    }
-    catch (e) {
-        return e;
-    }
+    let data = await proxify(formData,cookie)
+    return JSON.parse(data);
 }
 
 let getLyrics = async(url) => {

@@ -12,6 +12,7 @@ app.get('/lyrics', async function(req, res) {
 	try {
 	    if (!title) throw new Error('title parameter is empty!');
 	    let res1 = await az.searchSong(title)
+	    if (res1.songs.length === 0) throw new Error('There is no lyrics available for this song yet on AzLyrics.com');
 	    let res2 = await az.getLyrics(res1.songs[0].url)
 	    res.status(200).json(res2)
 	}

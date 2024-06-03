@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "azlyrics-scrape-api": "1.1.7-beta"
+    "azlyrics-scrape-api": "1.1.8-beta"
   },
   "repository": {
     "type": "git",
