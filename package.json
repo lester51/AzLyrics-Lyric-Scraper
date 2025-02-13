@@ -10,7 +10,8 @@
     "default": "./dist/esm/index.js"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.esm.json & tsc --project tsconfig.cjs.json"
+    "build": "npm install",
+    "test": "tsc --project tsconfig.esm.json & tsc --project tsconfig.cjs.json"
   },
   "keywords": [
     "azlyrics-scraper",
