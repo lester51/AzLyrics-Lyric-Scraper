@@ -4,7 +4,7 @@ const port = 3000;
 const app = express();
 
 app.get('/', (req, res) => {
-    res.sendFile('/index.html',{root: __dirname})
+    res.sendFile('/doc.html',{root: __dirname})
 })
 
 app.get('/lyrics', async function(req, res) {
