@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -35,121 +35,57 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
+var miniget = require('miniget');
 var cheerio = require('cheerio');
-var request = require('request');
-var qs = require('querystring');
-var proxify = function (data, jar) {
-    return new Promise(function (res, rej) {
-        request({
-            url: 'https:/\/www.4everproxy.com/query',
-            method: 'POST',
-            followAllRedirects: true,
-            headers: {
-                'cookie': jar,
-                'content-type': 'application/x-www-form-urlencoded',
-            },
-            body: qs.stringify(data)
-        }, function (e, r, b) { return (!e && r.statusCode == 200) ? res(b) : rej(e); });
-    });
-};
-var getConfig = function () {
-    return new Promise(function (res, rej) { return __awaiter(_this, void 0, void 0, function () {
-        var data, $, serverList, ipLocList;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4, new Promise(function (Res, Rej) {
-                        request({
-                            url: 'https:/\/www.4everproxy.com/',
-                            method: 'GET'
-                        }, function (e, r, b) { return (!e && r.statusCode == 200) ? Res({ cookie: r.headers['set-cookie'][0].split(';')[0], body: b }) : Rej(e); });
-                    }).catch(function (e) {
-                        throw new Error("Error while making the request!\n\n".concat(String(e)));
-                    })];
-                case 1:
-                    data = _a.sent();
-                    $ = cheerio.load(data.body);
-                    serverList = [], ipLocList = [];
-                    $('select[id=server_name] optgroup option').each(function (i, e) {
-                        var obj = {};
-                        obj.location = $(e).text();
-                        obj.server_name = $(e).attr('value');
-                        serverList.push(obj);
-                    });
-                    $('select[name=selip] option').each(function (i, e) {
-                        var obj = {};
-                        obj.ip = $(e).attr('value');
-                        obj.location = $(e).text();
-                        ipLocList.push(obj);
-                    });
-                    res({
-                        cookie: data.cookie,
-                        proxy_list: {
-                            servers: serverList,
-                            ips: ipLocList
-                        }
-                    });
-                    return [2];
-            }
-        });
-    }); });
-};
-var getObjectByLocation = function (el, array) {
-    return array.find(function (obj) { return obj.location.toLowerCase().includes(el.toLowerCase()); });
-};
-var searchSong = function (q) { return __awaiter(_this, void 0, void 0, function () {
-    var _a, proxy_list, cookie, formData, data;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0: return [4, getConfig()];
+var searchSong = function (title) { return __awaiter(_this, void 0, void 0, function () {
+    var res, _a, _b, e_1;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                _c.trys.push([0, 2, , 3]);
+                if (!title)
+                    throw new Error('Title parameter is missing.');
+                _b = (_a = JSON).parse;
+                return [4, miniget('https:/\/search.azlyrics.com/suggest.php?q=' + title).text()];
             case 1:
-                _a = _b.sent(), proxy_list = _a.proxy_list, cookie = _a.cookie;
-                formData = {
-                    u: "https://search.azlyrics.com/suggest.php?q=".concat(q),
-                    u_default: 'https:/\/www.google.com/',
-                    customip: '',
-                    server_name: getObjectByLocation('newyork', proxy_list.servers).server_name,
-                    selip: getObjectByLocation('newyork', proxy_list.ips).ip,
-                    allowCookies: 'on'
-                };
-                return [4, proxify(formData, cookie)];
+                res = _b.apply(_a, [_c.sent()]);
+                if (!res.songs.length)
+                    throw new Error('No lyrics for this song yet on our page.');
+                return [2, res];
             case 2:
-                data = _b.sent();
-                return [2, JSON.parse(data)];
+                e_1 = _c.sent();
+                return [2, e_1.toString()];
+            case 3: return [2];
         }
     });
 }); };
 var getLyrics = function (url) { return __awaiter(_this, void 0, void 0, function () {
-    var _a, proxy_list, cookie, formData, html, $, title, lyrics, types, translation;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0: return [4, getConfig()];
+    var res, e_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4, miniget(url).text()];
             case 1:
-                _a = _b.sent(), proxy_list = _a.proxy_list, cookie = _a.cookie;
-                formData = {
-                    u: url,
-                    u_default: 'https:/\/www.google.com/',
-                    customip: '',
-                    server_name: getObjectByLocation('newyork', proxy_list.servers).server_name,
-                    selip: getObjectByLocation('newyork', proxy_list.ips).ip,
-                    allowCookies: 'on'
-                };
-                return [4, proxify(formData, cookie)];
-            case 2:
-                html = _b.sent();
-                $ = cheerio.load(html);
+                res = _a.sent();
+                $ = cheerio.load(res);
                 title = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().text();
                 lyrics = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().next().next().next().text();
                 types = lyrics.match(/\[(.*?):\]/g);
                 if (types == null)
-                    return [2, { title: title, lyrics: lyrics.trim() }];
+                    return [2, [{ title: title, lyrics: lyrics.trim() }]];
                 translation = types.join().replace(/[\[\]:]/g, '').split(',');
                 lyrics = lyrics + '}';
-                lyrics = lyrics.trimStart().trim().replace(/\[(.*?):\]/g, "}{").substr(1).match(/{(.*?)}/g).map(function (e) { return e.replace(/[{}]/g, '').trim().trimStart().replace(/  /g, '\n\n'); });
+                lyrics = lyrics.trimStart().trim().replace(/\[(.*?):\]/g, "}{").substr(1).match(/\{[^]*?\}/g).map(function (e) { return e.replace(/[{}]/g, '').trim().trimStart().replace(/  /g, '\n\n'); });
                 lyrics = types.map(function (e, i) {
                     var _a;
                     return _a = {}, _a["".concat(translation[i])] = "".concat(e, "\n\n").concat(lyrics[i]), _a;
                 });
-                return [2, { title: title, lyricsList: lyrics }];
+                return [2, [{ title: title, lyricsList: lyrics }]];
+            case 2:
+                e_2 = _a.sent();
+                return [2, e_2.toString()];
+            case 3: return [2];
         }
     });
 }); };
