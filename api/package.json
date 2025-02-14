@@ -2,9 +2,9 @@
   "name": "azlyrics-api",
   "version": "1.0.0",
   "description": "azlyrics api by hackmesenpai",
-  "main": "index.js",
+  "main": "api.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node api.js"
   },
   "dependencies": {
     "express": "^4.19.2",
