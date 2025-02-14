@@ -2,15 +2,15 @@
  "version": 2,
  "builds": [
   {
-  "src": "./api.js",
+  "src": "./api/api.js",
   "use": "@vercel/node"
   }
   ],
  "routes": [
  {
-  "src": "/api/(.*)",
-   "dest": "/api"
+  "src": "./api/(.*)",
+   "dest": "/"
   }
  ],
-"installCommand": "npm install && node ./api.js"
+"installCommand": "npm install"
 }
