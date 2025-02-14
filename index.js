@@ -1,38 +1,34 @@
-const miniget = require('miniget');
-const cheerio = require('cheerio');
+const express = require('express');
+const az = require('azlyrics-scrape-api');
+const port = 3000;
+const app = express();
 
-let searchSong = async(title) => {
-    try {
-        if (!title) throw new Error('Title parameter is missing.');
-        let res = JSON.parse(await miniget('https:/\/search.azlyrics.com/suggest.php?q='+title).text());
-        if (!res.songs.length) throw new Error('No lyrics for this song yet on our page.');
-        return res;
-    } catch (e) {
-        return e.toString();
-    }
-}
+app.get('/', (req, res) => {
+    res.sendFile('/docs.html',{root: __dirname})
+})
 
-let getLyrics = async(url) => {
-    try {
-        let res = await miniget(url).text();
-        $ = cheerio.load(res);
-        title = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().text();
-        lyrics = $('div[class="col-xs-12 col-lg-8 text-center"] div[class=ringtone]').next().next().next().next().text();
-        types = lyrics.match(/\[(.*?):\]/g);
-        if (types == null) return [{ title: title, lyrics: lyrics.trim()}];
-        translation = types.join().replace(/[\[\]:]/g, '').split(',');
-        lyrics = lyrics + '}';
-        lyrics = lyrics.trimStart().trim().replace(/\[(.*?):\]/g, "}{").substr(1).match(/\{[^]*?\}/g).map(function (e) { return e.replace(/[{}]/g, '').trim().trimStart().replace(/  /g, '\n\n'); });
-        lyrics = types.map((e,i)=>{
-            return {[`${translation[i]}`]: `${e}\n\n${lyrics[i]}`}
-        })
-        return [{ title: title, lyricsList: lyrics }];
-    } catch (e) {
-        return e.toString();
-    }
-}
+app.get('/lyrics', async function(req, res) {
+    let title = req.query.title;
+	try {
+	    if (!title) throw new Error('title parameter is empty!');
+	    let res1 = await az.searchSong(title)
+	    if (res1.songs.length === 0) throw new Error('There is no lyrics available for this song yet on AzLyrics.com');
+	    else {
+	        let res2 = await az.getLyrics(res1.songs[0].url)
+	        res.status(200).json(res2)
+	    }
+	}
+	catch (e) {
+		if (!e.response) {
+			res.status(400).json({error: e.message})
+		} else {
+			res.status(400).json({error: e.response.status+' '+ e.response.statusText,data: e.response.data.message})
+		}
+	}
+});
 
-module.exports = {
-    getLyrics,
-    searchSong
-}
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`)
+});
+
+module.exports = app;

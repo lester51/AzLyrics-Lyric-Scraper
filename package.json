@@ -1,36 +1,26 @@
 {
-  "name": "azlyrics-scrape-api",
-  "version": "1.2.3-beta",
-  "description": "AzLyrics webscraper that returns a promise in JSON format. Another feature of this scraper is that it prevents the anti-bot detection so we can avoid human verifications such as captchas.",
-  "main": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
-  "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js",
-    "default": "./dist/esm/index.js"
-  },
+  "name": "azlyrics-api",
+  "version": "1.0.0",
+  "description": "azlyrics api by hackmesenpai",
+  "main": "index.js",
   "scripts": {
-    "build": "npm install",
-    "test": "tsc --project tsconfig.esm.json & tsc --project tsconfig.cjs.json"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "azlyrics-scraper",
-    "azlyrics-lyric-scraper",
-    "lyrics-scraper",
-    "azlyrics-api"
-  ],
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12",
-    "miniget": "^4.2.3"
+    "express": "^4.19.2",
+    "azlyrics-scrape-api": "1.2.3-beta"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lester51/AzLyrics-Lyric-Scraper.git"
   },
+  "keywords": [
+    "azlyrics"
+  ],
+  "author": "HackMeSenpai",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/lester51/AzLyrics-Lyric-Scraper/issues"
   },
-  "homepage": "https://github.com/lester51/AzLyrics-Lyric-Scraper",
-  "author": "HackMeSenpai",
-  "license": "MIT"
+  "homepage": "https://github.com/lester51/AzLyrics-Lyric-Scraper#readme"
 }
